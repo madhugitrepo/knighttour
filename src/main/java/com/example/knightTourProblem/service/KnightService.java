@@ -1,5 +1,7 @@
 package com.example.knightTourProblem.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,10 +10,11 @@ import java.util.List;
 
 @Service
 public class KnightService {
+    private static final Logger logger = LoggerFactory.getLogger(KnightService.class);
     private static final int[] rowMoves = {2, 1, -1, -2, -2, -1, 1, 2};
     private static final int[] colMoves = {1, 2, 2, 1, -1, -2, -2, -1};
 
-    public List<int[]> solveKnightTour1(int n, int x, int y) {
+    public List<int[]> solveKnightTour1(int n, int x, int y) throws Exception {
         int[][] chess = new int[n][n];
         List<int[]> moveList = new ArrayList<>();
         List<int[]> move = new ArrayList<>();
@@ -23,22 +26,21 @@ public class KnightService {
             chess[x][y] = 0;
 
             if (findKnightPath(chess, x, y, 1, move)) {
-                System.out.println("Knight's tour path:");
+                logger.info("Knight's tour path:");
                 for (int[] pos : move) {
                     moveList.add(pos);
                 }
             } else {
-                System.out.println("No solution exists.");
+                logger.info("No solution exists.");
             }
         } catch (Exception e) {
-            System.out.println(e);
-            throw e;
+            logger.error("An error occurred: " + e.getMessage(), e);
         }
         return moveList;
     }
 
     private boolean findKnightPath(int[][] chess, int x, int y, int move, List<int[]> path) {
-        System.out.println("move count :" + move);
+        logger.debug("move count :" + move);
         if (move == chess.length * chess.length) {
             return true; // All squares visited
         }
@@ -49,7 +51,7 @@ public class KnightService {
             if (isValidMove(chess, nextX, nextY)) {
                 chess[nextX][nextY] = move;
                 path.add(new int[]{nextX, nextY});
-                System.out.println("chess: " + chess + ", nextX: " + nextX + " , nextY: " + nextY);
+                logger.info("chess: " + chess + ", nextX: " + nextX + " , nextY: " + nextY);
                 if (findKnightPath(chess, nextX, nextY, move + 1, path)) {
                     return true; // Solution found
                 }

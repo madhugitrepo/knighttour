@@ -30,7 +30,7 @@ public class KnightServiceTest {
     }
 
     @Test
-    public void solveKnightTour1_PositiveScenario_ReturnsMoveList() {
+    public void solveKnightTour1_PositiveScenario_ReturnsMoveList() throws Exception {
         int n = 8;
         int x = 0;
         int y = 0;
@@ -43,7 +43,7 @@ public class KnightServiceTest {
     }
 
     @Test
-    public void solveKnightTour1_NegativeScenario_ReturnsEmptyMoveList() {
+    public void solveKnightTour1_NegativeScenario_ReturnsEmptyMoveList() throws Exception {
         int n = 5;
         int x = 2;
         int y = 3;
